@@ -1,0 +1,11 @@
+echo System Set\n
+set *((uint8_t *)(0x1101)) = 0x40
+set *((uint8_t *)(0x1100)) = 0x15
+set *((uint8_t *)(0x1100)) = 0x87
+set *((uint8_t *)(0x1100)) = 0x0f
+set *((uint8_t *)(0x1100)) = 0x28
+set *((uint8_t *)(0x1100)) = 0x2c
+set *((uint8_t *)(0x1100)) = 0xef
+set *((uint8_t *)(0x1100)) = 0x28
+set *((uint8_t *)(0x1100)) = 0x00
+echo Done\n
