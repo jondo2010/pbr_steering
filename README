@@ -1,0 +1,6 @@
+Steering Module
+
+input.{h,c}
+	-Handles external GPIO input
+	-Initializes the external interrupt lines for external interrupt sources (buttons, knobs, etc.)
+	-Stores callbacks
