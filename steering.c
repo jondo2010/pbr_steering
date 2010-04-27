@@ -58,7 +58,6 @@ steering_init (void)
 
 	input_init ();
 	//input_set_parameter_changed_callback (param_callback);
-	//input_set_value_changed_callback (param_screen_param_change);
 	input_enable ();
 
 	steering_can_impl_init ();

@@ -8,11 +8,16 @@
 #ifndef PARAM_SCREEN_H_
 #define PARAM_SCREEN_H_
 
+typedef module_param_t;
+
 void
 param_screen_param_change (int8_t p);
 
 void
 param_screen_update_scroll (void);
+
+void
+param_screen_draw_param_line (module_param_t param);
 
 void
 param_screen_init (void);

@@ -1,6 +1,9 @@
 /*
  * input.c
  *
+ * Handles GPIO and interrupts from external input
+ * from buttons, paddles, and rotary knobs.
+ *
  *  Created on: 2010-01-26
  *      Author: John Hughes <jondo2010@gmail.com>
  */
@@ -80,12 +83,6 @@ ISR (INT7_vect)
 {
 
 }
-
-/**
- * Initialize the steering module:
- *   - External interrupts for encoder knobs and push buttons
- *   - External memory interface to the LCD
- */
 
 void
 input_init (void)

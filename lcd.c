@@ -201,8 +201,9 @@ lcd_draw_clock
 	uint8_t s[5];
 
 	lcd_set_cursor_xy (15,0);
+	lcd_set_cursor_direction (CURSOR_RIGHT);
 	lcd_write_data ();
-	sprintf(s, "%u:%u", hh, mm);
+	sprintf(s, "%02u:%02u", hh, mm);
 	font_draw_string (s,TXT1_ADDRESS+15,5);
 }
 
@@ -311,7 +312,7 @@ lcd_init ()
 	/// SAD2: full-screen gfx
 	/// SAD3: 13 rows 16x16 chars
 
-	lcd_set_scroll (TXT1_ADDRESS, 0x20, GFX1_ADDRESS, 0xef, TXT2_ADDRESS);
+	lcd_set_scroll (TXT1_ADDRESS, 0x1e, GFX1_ADDRESS, 0xee, TXT2_ADDRESS);
 	lcd_set_hscroll (0x00); // Set horizontal scroll position
 	lcd_set_overlay (COMPOSE_XOR);
 

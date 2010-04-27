@@ -18,6 +18,7 @@
 #define TXT1_ADDRESS 	(0x0000)
 #define	TXT2_ADDRESS	(TXT1_ADDRESS + 0x50)
 #define GFX_WIDTH		(PIXELS_W/8u)							/* 40 */
+#define FONT_CHAR_WIDTH	(GFX_WIDTH/2)							/* 20 */
 #define GFX1_ADDRESS	(GFX_WIDTH * (PIXELS_H/8u))				/* 0x04b0 */
 #define GFX2_ADDRESS	(GFX1_ADDRESS + GFX_WIDTH * PIXELS_H)	/* 0x2a30 */
 
