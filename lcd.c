@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "lcd.h"
+#include "lcd_iface.h"
 #include "picture.h"
 
 /*
@@ -227,7 +228,7 @@ void
 lcd_reset ()
 {
 	PORTD &= ~_BV (PD7);
-	_delay_ms (10);
+	_delay_ms (100);
 	PORTD |= _BV (PD7);
 }
 
@@ -317,10 +318,10 @@ lcd_init ()
 	lcd_set_overlay (COMPOSE_XOR);
 
 	// Turn off display, set blinking cursor, all display blocks steady on
-	lcd_set_display_state (0, CURSOR_BLINK_2HZ, SAD_STEADY, SAD_STEADY, SAD_STEADY);
+	lcd_set_display_state (0, CURSOR_BLINK_1HZ, SAD_STEADY, SAD_STEADY, SAD_STEADY);
 	lcd_set_cursor_form (5, 7, BLOCK_CURSOR); // Set a 4x6 block cursor
 	lcd_set_cursor_direction (CURSOR_RIGHT);
 
 	// Turn display back on, cursor blinking, display blocks 1 and 2 steady, 3 off.
-	lcd_set_display_state (1, CURSOR_BLINK_2HZ, SAD_STEADY, SAD_STEADY, SAD_STEADY);
+	lcd_set_display_state (1, CURSOR_BLINK_1HZ, SAD_STEADY, SAD_STEADY, SAD_STEADY);
 }

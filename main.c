@@ -38,10 +38,15 @@ blinker_timeout ()
 int
 main (void)
 {
+	/// Status LED
+	DDRB = _BV (PB7);
 
 	steering_init ();
 	timeout_init ();
 	timeout_set (100, blinker_timeout, 0);
+
+	//CLKPR = _BV (CLKPCE);
+	//CLKPR = 0; //_BV (CLKPS0); /// Scale master clock by 2
 
 	sei ();
 

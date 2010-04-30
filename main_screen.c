@@ -6,6 +6,7 @@
  */
 
 #include <avr/io.h>
+#include "lcd_iface.h"
 #include "lcd.h"
 
 #define MAX_RPM				255

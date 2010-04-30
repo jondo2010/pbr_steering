@@ -9,9 +9,6 @@
 #ifndef LCD_H_
 #define LCD_H_
 
-#define LCD_COMM	*((uint8_t *)(0x1101))
-#define LCD_DATA	*((uint8_t *)(0x1100))
-
 #define	PIXELS_W		(320u)
 #define PIXELS_H		(240u)
 
