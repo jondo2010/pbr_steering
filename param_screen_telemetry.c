@@ -37,10 +37,117 @@ param_screen_telemetry_init (uint8_t line_offset, uint8_t mob_index)
 
 	dirty_parameters = 1;
 	prv_redraw_parameters ();
-	dirty_parameters = 0;
 	prv_can_init ();
 
 	return TELEMETRY_NUM_PARAMS;
+}
+
+void
+param_screen_telemetry_change_value (uint8_t param, int8_t change)
+{
+	uint8_t update = 0;
+	uint8_t buf[8];
+
+	switch (param)
+	{
+	case param_telemetry_channel:
+		if (change > 0 && telemetry_params.channel < CHANNEL_MAX)
+		{
+			*(uint8_t *)buf = (telemetry_params.channel + 1);
+		}
+		else if (change < 0 && telemetry_params.channel > CHANNEL_MIN)
+		{
+			*(uint8_t *)buf = (telemetry_params.channel - 1);
+		}
+		else
+		{
+			return;
+		}
+		break;
+	case param_telemetry_pan_id:
+		if (change > 0 && telemetry_params.pan_id < PAN_MAX)
+		{
+			*(uint16_t *)buf = (telemetry_params.pan_id + 1);
+		}
+		else if (change < 0 && telemetry_params.pan_id > PAN_MIN)
+		{
+			*(uint16_t *)buf = (telemetry_params.pan_id - 1);
+		}
+		else
+		{
+			return;
+		}
+		break;
+	case param_telemetry_car_id:
+		if (change > 0 && telemetry_params.car_id < XBEE_ID_MAX)
+		{
+			*(uint16_t *)buf = (telemetry_params.car_id + 1);
+		}
+		else if (change < 0 && telemetry_params.car_id > XBEE_ID_MIN)
+		{
+			*(uint16_t *)buf = (telemetry_params.car_id - 1);
+		}
+		else
+		{
+			return;
+		}
+		break;
+	case param_telemetry_dta_id:
+		if (change > 0 && telemetry_params.dta_node_address < XBEE_ID_MAX)
+		{
+			*(uint16_t *)buf = (telemetry_params.dta_node_address + 1);
+		}
+		else if (change < 0 && telemetry_params.dta_node_address > XBEE_ID_MIN)
+		{
+			*(uint16_t *)buf = (telemetry_params.dta_node_address - 1);
+		}
+		else
+		{
+			return;
+		}
+		break;
+	case param_telemetry_dac_id:
+		if (change > 0 && telemetry_params.dac_node_address < XBEE_ID_MAX)
+		{
+			*(uint16_t *)buf = (telemetry_params.dac_node_address + 1);
+		}
+		else if (change < 0 && telemetry_params.dac_node_address > XBEE_ID_MIN)
+		{
+			*(uint16_t *)buf = (telemetry_params.dac_node_address - 1);
+		}
+		else
+		{
+			return;
+		}
+		break;
+	case param_telemetry_dta_enabled:
+		if (telemetry_params.status_flags & dta_interface_enabled && change < 0)
+		{
+			*(uint8_t *)buf = 0;
+		}
+		else if (!(telemetry_params.status_flags & dta_interface_enabled) && change > 0)
+		{
+			*(uint8_t *)buf = 1;
+		}
+		break;
+	case param_telemetry_dac_enabled:
+		if (telemetry_params.status_flags & dac_interface_enabled && change < 0)
+		{
+			*(uint8_t *)buf = 0;
+		}
+		else if (!(telemetry_params.status_flags & dta_interface_enabled) && change > 0)
+		{
+			*(uint8_t *)buf = 1;
+		}
+		break;
+	default:
+		break;
+	}
+
+	mob.id = 0x8000 | (TELEMETRY_MODULE_ID << 8) | param;
+	can_config_mob (m_mob_index, &mob);
+	can_load_data (m_mob_index, buf, telemetry_param_defs[param].size);
+	can_ready_to_send (m_mob_index);
 }
 
 static void
@@ -69,6 +176,7 @@ prv_redraw_parameters_callback (void)
 		}
 		param_screen_draw_param_line (telemetry_param_defs[i].string, value, m_line_offset + i);
 	}
+	dirty_parameters = 0;
 }
 
 /**

@@ -13,6 +13,11 @@
 #include "steering_can_impl.h"
 #include "input.h"
 #include "param_screen.h"
+#include "draw.h"
+//#include "picture.h"
+
+extern const prog_uchar pbr_logo[];
+extern const prog_uchar nhd_logo[];
 
 void
 steering_init_lcd (void)
@@ -34,12 +39,31 @@ steering_init_lcd (void)
 	steering_lcd_boost_enable ();
 }
 
+void logo()
+{
+	static uint8_t w = 0;
+	lcd_clear_screen ();
+	if (w)
+	{
+		draw_image (pbr_logo, 0, 0, 320/8, 6837);
+		w = 0;
+	}
+	else
+	{
+		draw_image (nhd_logo, 0, 240/8/2, 320/8, 933);
+		w = 1;
+	}
+}
+
 void
 steering_init (void)
 {
 	steering_can_impl_init ();
 	steering_init_lcd ();
-	param_screen_init ();
+	dashboard_screen_init ();
+	//param_screen_init ();
+
+	//timeout_set (2000, logo, 1);
 
 	input_init ();
 	input_enable ();
